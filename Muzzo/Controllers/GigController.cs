@@ -1,4 +1,5 @@
-﻿using Muzzo.Models;
+﻿using Microsoft.AspNet.Identity;
+using Muzzo.Models;
 using Muzzo.ViewModels;
 using System.Linq;
 using System.Web.Mvc;
@@ -14,7 +15,8 @@ namespace Muzzo.Controllers
             _dbContext = new ApplicationDbContext();
         }
 
-        //Gets form for adding a gig
+        //Gets the form for adding a gig
+        [Authorize]
         [HttpGet]
         public ActionResult Create()
         {
@@ -25,6 +27,25 @@ namespace Muzzo.Controllers
 
             
             return View(model);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult Create(AddGigFormViewModel gigViewModel)
+        {
+            Gig gig = new Gig
+            {
+                ArtistId = User.Identity.GetUserId(),
+                GigDateTime = gigViewModel.DateTime,
+                Venue = gigViewModel.Venue,
+                GenreId = gigViewModel.Genre
+            };
+
+            _dbContext.Gigs.Add(gig);
+            _dbContext.SaveChanges();
+
+
+            return RedirectToAction("Index", "Home");
         }
     }
 }
