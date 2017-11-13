@@ -33,10 +33,19 @@ namespace Muzzo.Controllers
         [HttpPost]
         public ActionResult Create(AddGigFormViewModel gigViewModel)
         {
+            if (!ModelState.IsValid)
+            {
+                gigViewModel.Genres = _dbContext.Genres.ToList();
+
+                return View("Create", gigViewModel);
+
+            }
+                
+
             Gig gig = new Gig
             {
                 ArtistId = User.Identity.GetUserId(),
-                GigDateTime = gigViewModel.DateTime,
+                GigDateTime = gigViewModel.GetDateTime(),
                 Venue = gigViewModel.Venue,
                 GenreId = gigViewModel.Genre
             };
