@@ -31,6 +31,7 @@ namespace Muzzo.Controllers
 
         [Authorize]
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Create(AddGigFormViewModel gigViewModel)
         {
             if (!ModelState.IsValid)
