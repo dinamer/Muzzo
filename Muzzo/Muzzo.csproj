@@ -190,6 +190,10 @@
     <Compile Include="Migrations\201711122208029_AddFKsToGigsTable.Designer.cs">
       <DependentUpon>201711122208029_AddFKsToGigsTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201711140103516_AddNamePropertyToApplicationUser.cs" />
+    <Compile Include="Migrations\201711140103516_AddNamePropertyToApplicationUser.Designer.cs">
+      <DependentUpon>201711140103516_AddNamePropertyToApplicationUser.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
@@ -283,6 +287,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201711122208029_AddFKsToGigsTable.resx">
       <DependentUpon>201711122208029_AddFKsToGigsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711140103516_AddNamePropertyToApplicationUser.resx">
+      <DependentUpon>201711140103516_AddNamePropertyToApplicationUser.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
