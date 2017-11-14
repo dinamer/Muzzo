@@ -11,10 +11,30 @@
 
 
 <div>
-<ul>
+<ul class="gigsList">
   @foreach (var gig in Model)
   {
-      <li>@gig.GigDateTime - @gig.Artist.Name</li>
+      <li>
+
+          <div class="gigDate">
+              <div class="month">
+                  @gig.GigDateTime.ToString("MMM")
+              </div>
+              <div class="day">
+                  @gig.GigDateTime.ToString("d ")
+              </div>
+          </div>
+          <div class="gigDetails">
+              <span class="artist">
+                  @gig.Artist.Name
+              </span>
+              <span class="genre">
+                  @gig.Genre.Name
+              </span>
+          </div>
+
+
+      </li>
   }
 </ul>  
 </div>

@@ -1,5 +1,5 @@
 ﻿body {
-    padding-top: 50px;
+    padding-top: 70px;
     padding-bottom: 20px;
 }
 
@@ -106,3 +106,63 @@ h2,
     border-radius: 8px;
 }
 
+
+/*Page-level styles*/
+
+.gigsList {
+
+    list-style: none;
+
+}
+
+.gigsList > li {
+
+    position: relative;
+    margin-bottom: 30px;
+}
+
+.gigsList > li .gigDetails {
+    
+    position: absolute;
+    top: 0;
+    left: 75px;
+}
+
+ .gigsList > li .gigDetails .artist {
+    
+    font-weight: bold;
+    display: block;
+}
+
+.gigsList > li .gigDetails .genre {
+    
+    font-size: 14px;
+}
+.gigsList > li .gigDate {
+
+    width: 65px;
+    text-align: center;
+    font-weight: bold;
+
+}
+
+.gigsList > li .gigDate .month {
+
+    background-color: red;
+    text-transform: uppercase;
+    color: white;  
+    padding: 3px 6px;
+    border-radius: 6px 6px 0 0;
+
+
+}
+
+.gigsList > li .gigDate .day {
+
+   background-color: #f1f1f1;
+   color: gray;
+   font-size: 22px;
+   padding: 8px 6px;
+   border-radius: 0 0 6px 6px;
+
+}
