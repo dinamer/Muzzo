@@ -22,3 +22,87 @@ select,
 textarea {
     max-width: 280px;
 }
+
+span.field-validation-error {
+
+    color: red;
+    font-weight: bold;
+}
+
+.input-validation-error {
+
+    border-color: red;
+
+}
+
+/*Bootstrap overrides*/
+body{
+
+    font-size: 16px;
+
+}
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 500;
+}
+
+
+.navbar-inverse {
+    background-color: #ED0D18;
+    border-color: #ED0D18;
+}
+
+.navbar-inverse .navbar-nav > li > a {
+    color: #ffffff;
+}
+
+.navbar-inverse .navbar-brand {
+    color: #ffffff;
+}
+
+.navbar-brand {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.navbar-inverse .navbar-nav > .open > a,
+.navbar-inverse .navbar-nav > .open > a:hover,
+.navbar-inverse .navbar-nav > .open > a:focus {
+
+  background-color: #DD0D18;
+}
+
+.navbar-inverse .navbar-nav > .dropdown > a .caret {
+    border-top-color: #ffffff;
+    border-bottom-color: #ffffff;
+}
+
+h2,
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-control {
+    font-size: 14px;
+    padding: 6px 20px;
+    border-radius: 8px;
+}
+
+.btn {
+    font-size: 17px;
+    padding: 6px 20px;
+    border-radius: 8px;
+}
+
