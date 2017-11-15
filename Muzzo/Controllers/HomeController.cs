@@ -1,4 +1,5 @@
 ﻿using Muzzo.Models;
+using Muzzo.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -22,7 +23,18 @@ namespace Muzzo.Controllers
                                     .Include(g => g.Genre)
                                     .Where(g => g.GigDateTime > DateTime.Now)
                                     .ToList();
-            return View(gigs);
+
+            GigViewModel model = new GigViewModel {
+
+                UpcomingGigs = gigs,
+                ShowActions = User.Identity.IsAuthenticated,
+                Heading = "Upcoming gigs"
+
+            };
+
+
+
+            return View("Gigs", model);
         }
 
         public ActionResult About()

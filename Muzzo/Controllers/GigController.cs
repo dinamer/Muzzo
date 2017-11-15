@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNet.Identity;
 using Muzzo.Models;
 using Muzzo.ViewModels;
+using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -56,6 +58,30 @@ namespace Muzzo.Controllers
 
 
             return RedirectToAction("Index", "Home");
+        }
+
+
+        [Authorize]
+        public ActionResult AttendingGigs()
+        {
+            string atendeeId = User.Identity.GetUserId();
+
+            IEnumerable<Gig> gigs = _dbContext.Attendees
+                                    .Where(a => a.AttendeeId == atendeeId)
+                                    .Select(a => a.Gig)
+                                    .Include(g => g.Artist)
+                                    .Include(g => g.Genre)
+                                    .ToList();
+            GigViewModel model = new GigViewModel
+            {
+                UpcomingGigs = gigs,
+                ShowActions = User.Identity.IsAuthenticated,
+                Heading = "Gigs I'm attending"
+
+            };
+
+
+            return View("Gigs", model);
         }
     }
 }

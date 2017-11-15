@@ -36,6 +36,14 @@ span.field-validation-error {
 
 }
 
+.verticalOffset5 { margin-top: 5px; }
+.verticalOffset10 { margin-top: 10px; }
+.verticalOffset15 { margin-top: 15px; }
+.verticalOffset20 { margin-top: 20px; }
+.verticalOffset30 { margin-top: 30px; }
+
+
+
 /*Bootstrap overrides*/
 body{
 

@@ -1,0 +1,82 @@
+﻿@model Muzzo.ViewModels.GigViewModel
+@{
+    ViewBag.Title = "Gigs";
+}
+
+<h1>@Model.Heading</h1>
+
+<ul class="gigsList verticalOffset30">
+    @foreach (var gig in Model.UpcomingGigs)
+    {
+        <li>
+
+            <div class="gigDate">
+                <div class="month">
+                    @gig.GigDateTime.ToString("MMM")
+                </div>
+                <div class="day">
+                    @gig.GigDateTime.ToString("d ")
+                </div>
+            </div>
+            <div class="gigDetails">
+                <span class="artist">
+                    @gig.Artist.Name
+
+                    @if (Model.ShowActions)
+                    {
+                        <button data-followee-id="@gig.ArtistId" class="btn btn-link btn-sm pull-right jsFollow">Follow?</button>
+
+                    }
+                </span>
+                <span class="genre">
+                    @gig.Genre.Name
+                </span>
+                @if (Model.ShowActions)
+                {
+                    <button data-gig-id="@gig.Id" class="btn btn-default btn-sm pull-right jsAttend">Going?</button>
+                }
+            </div>
+
+
+        </li>
+    }
+</ul>
+
+
+
+
+
+@section scripts {
+
+    <script>
+
+        $(document).ready(function () {
+
+            $(".jsAttend").click(function (e) {
+
+                var button = $(e.target);
+
+                $.post("/api/attendances", { gigId: button.attr("data-gig-id") })
+                    .done(function () { button.removeClass("btn-default").addClass("btn-info").text("Going"); })
+                    .fail(function () {
+                        alert("Something went wrong.");
+                });
+
+            });
+
+
+            $(".jsFollow").click(function (e) {
+
+                var button = $(e.target);
+
+                $.post("/api/followings", { followeeId: button.attr("data-followee-id") })
+                    .done(function () { button.text("Following"); })
+                    .fail(function () { alert("Something went wrong."); });
+
+            });
+
+
+        });
+    </script>
+
+}
