@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNet.Identity;
 using Muzzo.Models;
 using Muzzo.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -31,6 +32,7 @@ namespace Muzzo.Controllers
             return View(model);
         }
 
+        //Creates a gig
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -57,7 +59,7 @@ namespace Muzzo.Controllers
             _dbContext.SaveChanges();
 
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("MyUpcomingGigs", "Gig");
         }
 
 
@@ -83,5 +85,21 @@ namespace Muzzo.Controllers
 
             return View("Gigs", model);
         }
+
+        //Gets artist's upcoming gigs
+        [Authorize]
+        public ActionResult MyUpcomingGigs()
+        {
+            string artistId = User.Identity.GetUserId();
+
+            IEnumerable<Gig> upcomingGigs = _dbContext.Gigs
+                             .Where(g => g.ArtistId == artistId && g.GigDateTime >= DateTime.Now)
+                             .Include(g => g.Genre)
+                             .ToList();
+
+            return View(upcomingGigs);
+        }
+
+
     }
 }

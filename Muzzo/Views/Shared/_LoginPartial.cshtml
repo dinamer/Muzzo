@@ -11,6 +11,7 @@
                 @User.Identity.GetUserName() <span class="caret"></span>
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="@Url.Action("MyUpcomingGigs", "Gig")">My upcoming gigs</a></li>
                 <li><a class="dropdown-item" href="@Url.Action("AttendingGigs", "Gig")">Gigs I'm attending</a></li>
                 <li><a class="dropdown-item" href="@Url.Action("Index", "Followees")">Artists I'm following</a></li>
                 <li class="divider" role="separator"></li>

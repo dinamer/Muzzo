@@ -1,0 +1,34 @@
+﻿@model IEnumerable<Muzzo.Models.Gig>
+@{
+    ViewBag.Title = "My upcoming gigs";
+}
+
+<h2>My upcoming gigs</h2>
+
+<ul class="gigsList verticalOffset30">
+    @foreach (var gig in Model)
+    {
+        <li>
+
+            <div class="gigDate">
+                <div class="month">
+                    @gig.GigDateTime.ToString("MMM")
+                </div>
+                <div class="day">
+                    @gig.GigDateTime.ToString("d ")
+                </div>
+            </div>
+            <div class="gigDetails">
+                <span class="artist">
+                    @gig.Venue
+                </span>
+                <span class="genre">
+                    @gig.Genre.Name
+                </span>
+            </div>
+
+
+        </li>
+    }
+</ul>
+
