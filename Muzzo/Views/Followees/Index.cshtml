@@ -1,0 +1,25 @@
+﻿@model IEnumerable<Muzzo.Models.ApplicationUser>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Artists I'm following</h2>
+
+<ul>
+
+    @foreach (var artist in Model)
+    {
+
+        <li>
+            <div>
+                    @artist.Name
+             </div>
+
+        </li>
+
+
+    }
+
+
+</ul>
+
