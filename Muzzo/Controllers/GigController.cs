@@ -23,26 +23,27 @@ namespace Muzzo.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            AddGigFormViewModel model = new AddGigFormViewModel
+            GigFormViewModel model = new GigFormViewModel
             {
-                Genres = _dbContext.Genres.ToList()
+                Genres = _dbContext.Genres.ToList(),
+                Heading = "Add a gig"
             };
 
             
-            return View(model);
+            return View("GigForm", model);
         }
 
         //Creates a gig
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(AddGigFormViewModel gigViewModel)
+        public ActionResult Create(GigFormViewModel gigViewModel)
         {
             if (!ModelState.IsValid)
             {
                 gigViewModel.Genres = _dbContext.Genres.ToList();
 
-                return View("Create", gigViewModel);
+                return View("GigForm", gigViewModel);
 
             }
                 
@@ -56,6 +57,59 @@ namespace Muzzo.Controllers
             };
 
             _dbContext.Gigs.Add(gig);
+            _dbContext.SaveChanges();
+
+
+            return RedirectToAction("MyUpcomingGigs", "Gig");
+        }
+
+
+        //Gets the form for editing a gig
+        [Authorize]
+        public ActionResult Edit(int id)
+        {
+            string userId = User.Identity.GetUserId();
+
+            Gig gig = _dbContext.Gigs.Single(g => g.Id == id && g.ArtistId == userId);
+
+            GigFormViewModel model = new GigFormViewModel
+            {
+                Id = gig.Id,
+                Genres = _dbContext.Genres.ToList(),
+                Genre = gig.GenreId,
+                Venue = gig.Venue,
+                Date = gig.GigDateTime.ToString("dd.MM.yyyy"),
+                Time = gig.GigDateTime.ToString("HH:mm"),
+                Heading = "Edit a gig"
+            };
+
+
+            return View("GigForm", model);
+        }
+
+
+        //Updates a gig
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Update(GigFormViewModel gigViewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                gigViewModel.Genres = _dbContext.Genres.ToList();
+
+                return View("GigForm", gigViewModel);
+
+            }
+
+            string userId = User.Identity.GetUserId();
+            Gig gigFromDb = _dbContext.Gigs.Single(g => g.Id == gigViewModel.Id && g.ArtistId == userId);
+
+            gigFromDb.GigDateTime = gigViewModel.GetDateTime();
+            gigFromDb.Venue = gigViewModel.Venue;
+            gigFromDb.GenreId = gigViewModel.Genre;
+           
+
             _dbContext.SaveChanges();
 
 

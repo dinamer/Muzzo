@@ -104,8 +104,8 @@ h2,
 }
 
 .form-control {
-    font-size: 14px;
-    padding: 6px 20px;
+    font-size: 15px;
+    height: 45px;  
     border-radius: 8px;
 }
 
@@ -155,6 +155,17 @@ h2,
     
     font-size: 14px;
 }
+
+.gigsList > li .actions {
+    font-size: 13px;
+    display: none;
+}
+
+.gigsList > li:hover .actions {
+    display: block;
+}
+
+
 .gigsList > li .gigDate {
 
     width: 65px;
@@ -183,3 +194,4 @@ h2,
    border-radius: 0 0 6px 6px;
 
 }
+

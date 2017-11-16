@@ -1,12 +1,17 @@
-﻿using Muzzo.Models;
+﻿using Muzzo.Controllers;
+using Muzzo.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
+using System.Web.Mvc;
 
 namespace Muzzo.ViewModels
 {
-    public class AddGigFormViewModel
+    public class GigFormViewModel
     {
+        public int Id { get; set; }
+
         [Required]
         public string Venue { get; set; }
 
@@ -21,6 +26,21 @@ namespace Muzzo.ViewModels
         [Required]
         public byte Genre { get; set; }
         public IEnumerable<Genre> Genres { get; set; }
+
+        public string Heading { get; set; }
+
+        public string ActionName {
+
+            get {
+
+                Expression<Func<GigController, ActionResult>> update = (c => c.Update(this));
+                Expression<Func<GigController, ActionResult>> create = (c => c.Create(this));
+
+                var action = (Id != 0) ? update : create;
+
+                return (action.Body as MethodCallExpression).Method.Name;
+            }
+        }
 
         public DateTime GetDateTime()
         {
