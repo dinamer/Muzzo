@@ -30,11 +30,65 @@
                 </span>
 
                 <div class="actions">
-                    <a href="@Url.Action("Edit", "Gig", new { id = gig.Id})">Edit</a>
-                    <a href="#">Delete</a>
+                    <a href="@Url.Action("Edit", "Gig", new { id = gig.Id})">Edit</a> |
+                    <a href="#" class="jsCancelGig" data-gigId="@gig.Id">Cancel</a>
                 </div>
             </div>
         </li>
     }
 </ul>
+
+@section scripts{
+    
+<script>
+    $(document).ready(function () {
+
+        $(".jsCancelGig").click(function (e) {
+            var link = $(e.target);
+            
+            bootbox.dialog({
+                message: "Are you sure you want to cancel the gig?",
+                buttons: {
+                    no: {
+                        label: 'No',
+                        className: 'btn-default',
+                        callback: function (result) {
+                            bootbox.hideAll();
+                        }
+                    },
+                    yes: {
+                        label: 'Yes',
+                        className: 'btn-danger',
+                        callback: function () {
+                            
+                                $.ajax({
+                                    url: "/api/gig/" + link.attr("data-gigId"),
+                                    method: "DELETE"
+                                })
+                                   .done(function () {
+                                       link.parents("li").fadeOut(function () {
+                                           //remove 'li' from DOM
+                                           $(this).remove();
+                                       });
+
+                                   })
+                                   .fail(function () {
+                                       alert("Something went wrong.");
+                                   });    
+                        }
+                    
+                    }
+                }
+            });          
+        });
+    });
+
+</script>    
+    
+    
+    
+    
+    
+    
+}
 

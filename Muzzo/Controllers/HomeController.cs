@@ -21,7 +21,7 @@ namespace Muzzo.Controllers
             IEnumerable<Gig> gigs = _dbContext.Gigs
                                     .Include(g => g.Artist)
                                     .Include(g => g.Genre)
-                                    .Where(g => g.GigDateTime > DateTime.Now)
+                                    .Where(g => g.GigDateTime > DateTime.Now && !g.IsCanceled)
                                     .ToList();
 
             GigViewModel model = new GigViewModel {

@@ -147,7 +147,7 @@ namespace Muzzo.Controllers
             string artistId = User.Identity.GetUserId();
 
             IEnumerable<Gig> upcomingGigs = _dbContext.Gigs
-                             .Where(g => g.ArtistId == artistId && g.GigDateTime >= DateTime.Now)
+                             .Where(g => g.ArtistId == artistId && g.GigDateTime >= DateTime.Now && g.IsCanceled != true)
                              .Include(g => g.Genre)
                              .ToList();
 

@@ -21,5 +21,7 @@ namespace Muzzo.Models
         public byte GenreId { get; set; }
         public Genre Genre { get; set; }
 
+        public bool IsCanceled { get; set; }
+
     }
 }
