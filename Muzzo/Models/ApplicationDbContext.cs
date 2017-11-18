@@ -9,6 +9,9 @@ namespace Muzzo.Models
         public DbSet<Gig> Gigs { get; set; }
         public DbSet<Attendance> Attendees { get; set; }
         public DbSet<Following> Followings { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
+        public DbSet<UserNotification> UserNotifications { get; set; }
+
 
 
         public ApplicationDbContext()
@@ -39,6 +42,11 @@ namespace Muzzo.Models
             modelBuilder.Entity<ApplicationUser>()
                 .HasMany(u => u.Followees)
                 .WithRequired(f => f.Follower)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<UserNotification>()
+                .HasRequired(u => u.User)
+                .WithMany()
                 .WillCascadeOnDelete(false);
 
             base.OnModelCreating(modelBuilder); 
