@@ -31,7 +31,7 @@ namespace Muzzo.Models
 
             modelBuilder.Entity<Attendance>()
                 .HasRequired(a => a.Gig)
-                .WithMany()
+                .WithMany(g => g.Attendees)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<ApplicationUser>()
@@ -45,8 +45,8 @@ namespace Muzzo.Models
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<UserNotification>()
-                .HasRequired(u => u.User)
-                .WithMany()
+                .HasRequired(un => un.User)
+                .WithMany(u => u.UserNotifications)
                 .WillCascadeOnDelete(false);
 
             base.OnModelCreating(modelBuilder); 

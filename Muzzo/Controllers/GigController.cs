@@ -103,12 +103,11 @@ namespace Muzzo.Controllers
             }
 
             string userId = User.Identity.GetUserId();
-            Gig gigFromDb = _dbContext.Gigs.Single(g => g.Id == gigViewModel.Id && g.ArtistId == userId);
+            Gig gigFromDb = _dbContext.Gigs
+                            .Include(g => g.Attendees.Select(a => a.Attendee))
+                            .Single(g => g.Id == gigViewModel.Id && g.ArtistId == userId);
 
-            gigFromDb.GigDateTime = gigViewModel.GetDateTime();
-            gigFromDb.Venue = gigViewModel.Venue;
-            gigFromDb.GenreId = gigViewModel.Genre;
-           
+            gigFromDb.Update(gigViewModel.GetDateTime(), gigViewModel.Venue, gigViewModel.Genre);
 
             _dbContext.SaveChanges();
 
