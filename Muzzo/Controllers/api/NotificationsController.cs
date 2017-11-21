@@ -7,7 +7,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web.Http;
 
-namespace Muzzo.Controllers
+namespace Muzzo.Controllers.api
 {
     [Authorize]
     public class NotificationsController : ApiController
@@ -52,5 +52,20 @@ namespace Muzzo.Controllers
             //        }
             //});
         }
+
+        [HttpPost]
+        public IHttpActionResult MarkNotificationsAsRead()
+        {
+            var user = User.Identity.GetUserId();
+            var notifications = _dbContext.UserNotifications.Where(un => un.UserId == user && !un.IsRead).ToList();
+
+            notifications.ForEach(un => un.NotificationRead());
+
+            _dbContext.SaveChanges();
+         
+           
+            return Ok();
+        }
+    
     }
 }

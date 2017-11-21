@@ -33,6 +33,24 @@ namespace Muzzo.Models
             Attendees = new Collection<Attendance>();
         }
 
+        public Gig Create(string artistId, IEnumerable<ApplicationUser> followers, DateTime dateTime, string venue, byte genreId) {
+
+
+            ArtistId = artistId;
+            GigDateTime = dateTime;
+            Venue = venue;
+            GenreId = genreId;
+
+            Notification notification = Notification.GigAdded(this);
+
+
+            foreach (var user in followers)
+            {
+                user.Notify(notification);
+            }
+
+            return this;
+        }
 
         public void Cancel() {
 

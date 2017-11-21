@@ -85,6 +85,21 @@ h6,
   font-size: 22px;
   font-weight: 700;
 }
+.navbar-inverse .notifications {
+    position: relative;
+}
+.navbar-inverse .fa {
+    left:0;
+    top:5px;
+}
+    .navbar-inverse .notifications .badge {
+        position: absolute;
+        margin-top: -6px;
+        margin-left:-8px;
+        margin-right:0px;
+        background: #FA2D17;
+
+    }
 
 .navbar-inverse .navbar-nav > .open > a,
 .navbar-inverse .navbar-nav > .open > a:hover,
@@ -92,6 +107,7 @@ h6,
 
   background-color: #DD0D18;
 }
+
 
 .navbar-inverse .navbar-nav > .dropdown > a .caret {
     border-top-color: #ffffff;
@@ -123,6 +139,29 @@ h2,
     border-radius: 8px;
 
 }
+
+.popover {
+   padding: 0px;
+   /*border: 1px solid #f1f1f1;*/
+   -webkit-box-shadow: none;
+    box-shadow: none;
+    max-width: 320px;
+}
+
+
+/*Naslov s crvenom pozadinom.popover-title {
+  
+  background-color: #FA2D17;
+  border-bottom: 1px solid #FA2D17;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+}*/
+
+.popover-content {
+  padding: 0;
+}
+
 
 /*Page-level styles*/
 
@@ -194,4 +233,31 @@ h2,
    border-radius: 0 0 6px 6px;
 
 }
+
+
+
+ul.notificationsList {
+    
+    list-style: none;
+    padding-left: 0;
+   
+
+}
+
+ul.notificationsList > li {
+
+    padding: 11px;
+    border-bottom: 2px solid #f1f1f1
+
+}
+
+ul.notificationsList > li:last-child {
+
+    border-bottom: none;
+}
+
+    ul.notificationsList .highlight {
+
+        font-weight: bold;
+    }
 

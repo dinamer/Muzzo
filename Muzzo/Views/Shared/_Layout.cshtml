@@ -38,8 +38,75 @@
         </footer>
     </div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/lib")
     @RenderSection("scripts", required: false)
+
+    <script type="text/x-temp" id="notificationTemp">
+
+        <ul class="notificationsList">
+            <%
+            _.each(notifications, function(notification){
+
+            if(notification.type == 1) { %>
+            <li><span class="highlight"><%= notification.gig.artist.name %></span> has added a new gig at <%= notification.gig.venue %> at <%= moment(notification.gig.gigDateTime).format("DD.MM.YYYY HH:mm") %>h</li>
+            <%
+            }
+
+            else if(notification.type == 2) {%>
+            <li><span class="highlight"><%= notification.gig.artist.name %></span> has updated the gig at <%= notification.gig.venue %> at <%= moment(notification.gig.gigDateTime).format("DD.MM.YYYY HH:mm") %>h</li>
+            <%
+            }
+
+            else { %>
+            <li><span class="highlight"><%= notification.gig.artist.name %></span> has canceled the gig at <%= notification.gig.venue %> at <%= moment(notification.gig.gigDateTime).format("DD.MM.YYYY HH:mm") %>h</li>
+            <%
+            }
+
+            })
+            %>
+        </ul>
+    </script>
+
+    <script>
+
+        $(document).ready(function () {
+
+            $.getJSON("/api/notifications", function (notifications) {
+
+                if(notifications.length != 0)
+                    $(".jsNotificationCount").text(notifications.length)
+                                             .removeClass("hide").addClass("animated bounceInDown");
+
+
+                $(".notifications").popover({
+                    html: true,
+                    title: "Notifications",
+                    placement: "bottom",
+                    content: function () {
+
+                        var listNotifications = _.template($("#notificationTemp").html());
+                        return listNotifications({ notifications: notifications });
+
+                    }
+                }).on("shown.bs.popover", function () {
+
+                    $.post("/api/notifications/markNotificationsAsRead")
+                    .done(function () {
+
+                        $(".jsNotificationCount").text("").addClass("hide");
+                    })
+                    .fail(function () {
+
+                        bootbox.alert("Something went wrong.");
+
+                    });
+
+                });
+            });
+
+        });
+
+    </script>
 </body>
+
 </html>

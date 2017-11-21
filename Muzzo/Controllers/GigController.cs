@@ -46,17 +46,13 @@ namespace Muzzo.Controllers
                 return View("GigForm", gigViewModel);
 
             }
-                
 
-            Gig gig = new Gig
-            {
-                ArtistId = User.Identity.GetUserId(),
-                GigDateTime = gigViewModel.GetDateTime(),
-                Venue = gigViewModel.Venue,
-                GenreId = gigViewModel.Genre
-            };
 
-            _dbContext.Gigs.Add(gig);
+            Gig gig = new Gig();
+
+            var user = User.Identity.GetUserId();
+            var followers = _dbContext.Followings.Where(f => f.FolloweeId == user).Select(f => f.Follower).ToList();
+            _dbContext.Gigs.Add(gig.Create(user, followers, gigViewModel.GetDateTime(), gigViewModel.Venue, gigViewModel.Genre));
             _dbContext.SaveChanges();
 
 
