@@ -16,7 +16,7 @@ namespace Muzzo.Controllers
         {
             _dbContext = new ApplicationDbContext();
         }
-        public ActionResult Index()
+        public ActionResult Index(string searchQuery = null)
         {
             IEnumerable<Gig> gigs = _dbContext.Gigs
                                     .Include(g => g.Artist)
@@ -24,15 +24,22 @@ namespace Muzzo.Controllers
                                     .Where(g => g.GigDateTime > DateTime.Now && !g.IsCanceled)
                                     .ToList();
 
+            if (!string.IsNullOrWhiteSpace(searchQuery)) {
+
+                gigs = gigs.Where(g => g.Artist.Name.Contains(searchQuery) || 
+                                  g.Genre.Name.Contains(searchQuery) ||
+                                  g.Venue.Contains(searchQuery)); 
+            }
+           
+
             GigViewModel model = new GigViewModel {
 
                 UpcomingGigs = gigs,
                 ShowActions = User.Identity.IsAuthenticated,
-                Heading = "Upcoming gigs"
+                Heading = "Upcoming gigs",
+                SearchTerm = searchQuery
 
             };
-
-
 
             return View("Gigs", model);
         }

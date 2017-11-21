@@ -261,3 +261,14 @@ ul.notificationsList > li:last-child {
         font-weight: bold;
     }
 
+
+#searchGigsGroup {
+    width: 318px;
+    
+}
+    #searchGigsGroup .form-control {
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        -webkit-transition: none;
+        transition: none;
+    }

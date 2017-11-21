@@ -149,6 +149,11 @@ namespace Muzzo.Controllers
             return View(upcomingGigs);
         }
 
+        //Search
+        public ActionResult Search(GigViewModel gigViewModel)
+        {
+            return RedirectToAction("Index", "Home", new { searchQuery = gigViewModel.SearchTerm });
 
+        }
     }
 }
