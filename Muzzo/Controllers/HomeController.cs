@@ -1,4 +1,5 @@
-﻿using Muzzo.Models;
+﻿using Microsoft.AspNet.Identity;
+using Muzzo.Models;
 using Muzzo.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -16,8 +17,11 @@ namespace Muzzo.Controllers
         {
             _dbContext = new ApplicationDbContext();
         }
+
         public ActionResult Index(string searchQuery = null)
         {
+            string userId = User.Identity.GetUserId();
+
             IEnumerable<Gig> gigs = _dbContext.Gigs
                                     .Include(g => g.Artist)
                                     .Include(g => g.Genre)
@@ -30,15 +34,19 @@ namespace Muzzo.Controllers
                                   g.Genre.Name.Contains(searchQuery) ||
                                   g.Venue.Contains(searchQuery)); 
             }
-           
+
+
+            var attendances = _dbContext.Attendees
+                              .Where(a => a.AttendeeId == userId && a.Gig.GigDateTime >= DateTime.Now)
+                              .ToList().ToLookup(a => a.GigId);
 
             GigViewModel model = new GigViewModel {
 
                 UpcomingGigs = gigs,
                 ShowActions = User.Identity.IsAuthenticated,
                 Heading = "Upcoming gigs",
-                SearchTerm = searchQuery
-
+                SearchTerm = searchQuery,
+                Attendances = attendances
             };
 
             return View("Gigs", model);

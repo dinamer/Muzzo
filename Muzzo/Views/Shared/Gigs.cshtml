@@ -1,4 +1,5 @@
-﻿@model Muzzo.ViewModels.GigViewModel
+﻿@using Microsoft.AspNet.Identity
+@model Muzzo.ViewModels.GigViewModel
 @{
     ViewBag.Title = "Gigs";
 }
@@ -8,9 +9,9 @@
 @using (Html.BeginForm("Search", "Gig"))
 {
 
-    <div class="form-group">
+    <div class="form-group verticalOffset30">
         <div class="input-group" id="searchGigsGroup">
-            @Html.TextBoxFor(m => m.SearchTerm, new { @class = "form-control", placeholder = "Search by genre, venue or artist's name"})
+            @Html.TextBoxFor(m => m.SearchTerm, new { @class = "form-control", placeholder = "Search by genre, venue or artist"})
             <span class="input-group-addon" id="searchGigs"><i class="fa fa-search" aria-hidden="true"></i></span>
         </div>
     </div> 
@@ -31,7 +32,7 @@
             </div>
             <div class="gigDetails">
                 <span class="artist">
-                    @gig.Artist.Name
+                    @Html.ActionLink(@gig.Artist.Name, "Details", "Gig", new { gigId = @gig.Id }, null)
                     @if (gig.IsCanceled)
                     {
                         <span class="label label-warning">Canceled</span>
@@ -48,14 +49,22 @@
                 </span>
                 @if (Model.ShowActions && !gig.IsCanceled)
                 {
-                    <button data-gig-id="@gig.Id" class="btn btn-default btn-sm pull-right jsAttend">Going?</button>
+
+                    <button data-gig-id="@gig.Id"
+                            class="btn @(Model.Attendances.Contains(gig.Id) ? "btn-info" : "btn-default")
+                                   btn-sm pull-right jsAttend">
+                        @(Model.Attendances.Contains(gig.Id) ? "Going" : "Going?")
+                    </button>
+
                 }
-            </div>
+        </div>
 
 
-        </li>
-        }
-</ul>
+    </li>
+                }
+            </ul>
+
+
 
 
 
@@ -71,11 +80,20 @@
 
                 var button = $(e.target);
 
-                $.post("/api/attendances", { gigId: button.attr("data-gig-id") })
-                    .done(function () { button.removeClass("btn-default").addClass("btn-info").text("Going"); })
-                    .fail(function () {
-                        alert("Something went wrong.");
-                    });
+                if (button.hasClass("btn-default")) {
+                    $.post("/api/attendances", { gigId: button.attr("data-gig-id") })
+                        .done(function () { button.removeClass("btn-default").addClass("btn-info").text("Going"); })
+                        .fail(function () { bootbox.alert("Something went wrong."); });
+                }
+                else {
+
+                    $.ajax({
+                        url: "/api/attendances/" + button.attr("data-gig-id"),
+                        method: "DELETE"
+                    })
+                        .done(function () { button.removeClass("btn-info").addClass("btn-default").text("Going?"); })
+                        .fail(function () { bootbox.alert("Something went wrong."); });
+                }
 
             });
 

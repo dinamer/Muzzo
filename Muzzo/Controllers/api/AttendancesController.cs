@@ -39,5 +39,21 @@ namespace Muzzo.Controllers.api
             return Ok();
         }
 
+        [HttpDelete]
+        public IHttpActionResult DeleteAttendance(int id)
+        {
+            string attendeeId = User.Identity.GetUserId();
+
+            var attendance = _dbContext.Attendees
+                             .SingleOrDefault(a => a.GigId == id && a.AttendeeId == attendeeId);
+
+            if (attendance == null)
+                return NotFound();
+
+            _dbContext.Attendees.Remove(attendance);
+            _dbContext.SaveChanges();
+
+            return Ok(id);
+        }
     }
 }

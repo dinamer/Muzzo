@@ -11,7 +11,7 @@ namespace Muzzo.Controllers
 {
     public class GigController : Controller
     {
-        private readonly ApplicationDbContext _dbContext;
+        private ApplicationDbContext _dbContext;
 
         public GigController()
         {
@@ -115,19 +115,25 @@ namespace Muzzo.Controllers
         [Authorize]
         public ActionResult AttendingGigs()
         {
-            string atendeeId = User.Identity.GetUserId();
+            string attendeeId = User.Identity.GetUserId();
 
             IEnumerable<Gig> gigs = _dbContext.Attendees
-                                    .Where(a => a.AttendeeId == atendeeId)
+                                    .Where(a => a.AttendeeId == attendeeId)
                                     .Select(a => a.Gig)
                                     .Include(g => g.Artist)
                                     .Include(g => g.Genre)
                                     .ToList();
+
+            var attendances = _dbContext.Attendees
+                              .Where(a => a.AttendeeId == attendeeId && a.Gig.GigDateTime >= DateTime.Now)
+                              .ToList().ToLookup(a => a.GigId);
+
             GigViewModel model = new GigViewModel
             {
                 UpcomingGigs = gigs,
                 ShowActions = User.Identity.IsAuthenticated,
-                Heading = "Gigs I'm attending"
+                Heading = "Gigs I'm attending",
+                Attendances = attendances
 
             };
 
@@ -149,11 +155,94 @@ namespace Muzzo.Controllers
             return View(upcomingGigs);
         }
 
-        //Search
+        //Search gigs by artist's name, venue or genre
         public ActionResult Search(GigViewModel gigViewModel)
         {
             return RedirectToAction("Index", "Home", new { searchQuery = gigViewModel.SearchTerm });
 
         }
+
+        //Gets gig's details
+        public ActionResult Details(int gigId)
+        {
+            var gig = _dbContext.Gigs
+                      .Include(g => g.Artist.Followers)
+                      .Include(g => g.Attendees)
+                      .Include(g => g.Genre)
+                      .SingleOrDefault(g => g.Id == gigId);
+
+            if (gig == null)
+                return HttpNotFound();
+
+            GigDetailsViewModel model = GigDetailsViewModel.Create(gig, User.Identity.GetUserId(), User.Identity.IsAuthenticated);
+
+            return View(model);
+        }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

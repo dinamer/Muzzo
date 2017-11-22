@@ -1,0 +1,49 @@
+﻿@model Muzzo.ViewModels.GigDetailsViewModel
+@{
+    ViewBag.Title = "Details";
+}
+
+<div id="detailsArtist">
+    <span id="artist">@Model.Artist</span>
+    <span class="btnDetailsFollowing">
+        @if (Model.ShowActions)
+        {
+            if (Model.IsFollowing)
+            {
+                   <button class="btn btn-info btn-sm">Following</button>
+            }
+            else
+            {
+                   <button data-followee-id="@Model.ArtistId" class="btn btn-default btn-sm jsFollow">Follow?</button>
+            }
+
+        }
+    </span>
+</div>
+
+<div class="verticalOffset30">
+    Performing at @Model.Venue on @Model.GigDate at @Model.GigTime
+    @if (Model.ShowActions && Model.IsAttending)
+    {
+         <p>You are going to this event</p>
+
+    }
+</div>
+
+@section scripts {
+<script>
+
+        $(document).ready(function () {
+
+            $(".jsFollow").click(function (e) {
+
+                var button = $(e.target);
+
+                $.post("/api/followings", { followeeId: button.attr("data-followee-id") })
+                    .done(function () { button.text("Following").removeClass("btn-default").addClass("btn-info"); })
+                    .fail(function () { bootbox.alert("Something went wrong."); });
+
+            });
+        });
+</script>
+}

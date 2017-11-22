@@ -3,6 +3,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -31,7 +32,18 @@ namespace Muzzo.Models
             UserNotifications.Add(new UserNotification(this, notification));
         }
 
+        //Checks if this user is followed by another
+        public bool IsFollowedBy(string anotherUserId) {
 
+            return Followers.Any(f => f.FolloweeId == Id && f.FollowerId == anotherUserId);
+        }
+
+        //Checks if this user is following another one
+        public bool IsFollowing(string anotherUserId)
+        {
+
+            return Followees.Any(f => f.FollowerId == Id && f.FolloweeId == anotherUserId );
+        }
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
                                                // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
