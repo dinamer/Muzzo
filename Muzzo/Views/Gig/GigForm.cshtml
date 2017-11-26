@@ -20,7 +20,7 @@
 
     <div class="form-group">
         @Html.LabelFor(m => m.Date)
-        @Html.TextBoxFor(m => m.Date, new { @class = "form-control", placeholder = "dd.mm.yyyy" })
+        @Html.TextBoxFor(m => m.Date, new { @class = "form-control", id = "datePicker", placeholder = "dd.mm.yyyy" })
         @Html.ValidationMessageFor(m => m.Date)
     </div>
 
@@ -45,5 +45,14 @@
 @section scripts{
     
     @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryui")
+
+    <script>
+        $(document).ready(function () {
+
+            gigFormController.datePicker();
+        });
+    </script>
     
 }
+
