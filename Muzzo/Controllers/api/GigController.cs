@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNet.Identity;
-using Muzzo.Models;
-using System.Data.Entity;
-using System.Linq;
+using Muzzo.Core;
+using Muzzo.Persistence;
 using System.Web.Http;
 
 namespace Muzzo.Controllers.api
@@ -10,28 +9,31 @@ namespace Muzzo.Controllers.api
     public class GigController : ApiController
     {
 
-        private ApplicationDbContext _dbContext;
+        private IUnitOfWork _unitOfWork;
 
-        public GigController()
+        public GigController(UnitOfWork unitOfWork)
         {
-            _dbContext = new ApplicationDbContext();
+            _unitOfWork = unitOfWork;
         }
 
 
         [HttpDelete]
         public IHttpActionResult CancelGig(int id)
         {
-            string artistId = User.Identity.GetUserId();
-            var gig = _dbContext.Gigs
-                      .Include(g => g.Attendees.Select(a => a.Attendee))
-                      .Single(g => g.Id == id && g.ArtistId == artistId);
+            var gig = _unitOfWork.Gigs.GetGigWithAttendees(id);
+
+            if (gig == null)
+                return NotFound();
 
             if (gig.IsCanceled)
                 return NotFound();
 
+            if (gig.ArtistId != User.Identity.GetUserId())
+                return Unauthorized();
+
             gig.Cancel();
 
-            _dbContext.SaveChanges();
+            _unitOfWork.Complete();
 
             return Ok();
         }

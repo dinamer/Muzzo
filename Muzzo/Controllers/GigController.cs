@@ -1,21 +1,20 @@
 ﻿using Microsoft.AspNet.Identity;
-using Muzzo.Models;
-using Muzzo.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Data.Entity;
+using Muzzo.Core;
+using Muzzo.Core.Models;
+using Muzzo.Core.ViewModels;
 using System.Linq;
 using System.Web.Mvc;
+
 
 namespace Muzzo.Controllers
 {
     public class GigController : Controller
-    {
-        private ApplicationDbContext _dbContext;
+    {      
+        private IUnitOfWork _unitOfWork;
 
-        public GigController()
-        {
-            _dbContext = new ApplicationDbContext();
+        public GigController(IUnitOfWork unitOfWork)
+        {          
+            _unitOfWork = unitOfWork;
         }
 
         //Gets the form for adding a gig
@@ -25,7 +24,7 @@ namespace Muzzo.Controllers
         {
             GigFormViewModel model = new GigFormViewModel
             {
-                Genres = _dbContext.Genres.ToList(),
+                Genres = _unitOfWork.Genres.GetGenres(),
                 Heading = "Add a gig"
             };
 
@@ -41,20 +40,19 @@ namespace Muzzo.Controllers
         {
             if (!ModelState.IsValid)
             {
-                gigViewModel.Genres = _dbContext.Genres.ToList();
+                gigViewModel.Genres = _unitOfWork.Genres.GetGenres();
 
                 return View("GigForm", gigViewModel);
 
             }
 
+            _unitOfWork.Gigs.AddGig(Gig.Create(User.Identity.GetUserId(),
+                                    _unitOfWork.Followings.GetFollowersByArtist(User.Identity.GetUserId()), 
+                                    gigViewModel.GetDateTime(),
+                                    gigViewModel.Venue,
+                                    gigViewModel.Genre));
 
-            Gig gig = new Gig();
-
-            var user = User.Identity.GetUserId();
-            var followers = _dbContext.Followings.Where(f => f.FolloweeId == user).Select(f => f.Follower).ToList();
-            _dbContext.Gigs.Add(gig.Create(user, followers, gigViewModel.GetDateTime(), gigViewModel.Venue, gigViewModel.Genre));
-            _dbContext.SaveChanges();
-
+            _unitOfWork.Complete();
 
             return RedirectToAction("MyUpcomingGigs", "Gig");
         }
@@ -64,21 +62,24 @@ namespace Muzzo.Controllers
         [Authorize]
         public ActionResult Edit(int id)
         {
-            string userId = User.Identity.GetUserId();
+            Gig gig = _unitOfWork.Gigs.GetGig(id);
 
-            Gig gig = _dbContext.Gigs.Single(g => g.Id == id && g.ArtistId == userId);
+            if (gig == null)
+                return HttpNotFound();
+
+            if (gig.ArtistId != User.Identity.GetUserId())
+                return new HttpUnauthorizedResult();
 
             GigFormViewModel model = new GigFormViewModel
             {
                 Id = gig.Id,
-                Genres = _dbContext.Genres.ToList(),
+                Genres = _unitOfWork.Genres.GetGenres(),
                 Genre = gig.GenreId,
                 Venue = gig.Venue,
                 Date = gig.GigDateTime.ToString("dd.MM.yyyy"),
                 Time = gig.GigDateTime.ToString("HH:mm"),
                 Heading = "Edit a gig"
             };
-
 
             return View("GigForm", model);
         }
@@ -92,21 +93,23 @@ namespace Muzzo.Controllers
         {
             if (!ModelState.IsValid)
             {
-                gigViewModel.Genres = _dbContext.Genres.ToList();
+                gigViewModel.Genres = _unitOfWork.Genres.GetGenres();
 
                 return View("GigForm", gigViewModel);
 
             }
 
-            string userId = User.Identity.GetUserId();
-            Gig gigFromDb = _dbContext.Gigs
-                            .Include(g => g.Attendees.Select(a => a.Attendee))
-                            .Single(g => g.Id == gigViewModel.Id && g.ArtistId == userId);
+            Gig gig = _unitOfWork.Gigs.GetGigWithAttendees(gigViewModel.Id);
 
-            gigFromDb.Update(gigViewModel.GetDateTime(), gigViewModel.Venue, gigViewModel.Genre);
+            if (gig == null)
+                return HttpNotFound();
 
-            _dbContext.SaveChanges();
+            if (gig.ArtistId != User.Identity.GetUserId())
+                return new HttpUnauthorizedResult();
 
+            gig.Update(gigViewModel.GetDateTime(), gigViewModel.Venue, gigViewModel.Genre);
+
+            _unitOfWork.Complete();
 
             return RedirectToAction("MyUpcomingGigs", "Gig");
         }
@@ -117,23 +120,12 @@ namespace Muzzo.Controllers
         {
             string attendeeId = User.Identity.GetUserId();
 
-            IEnumerable<Gig> gigs = _dbContext.Attendees
-                                    .Where(a => a.AttendeeId == attendeeId)
-                                    .Select(a => a.Gig)
-                                    .Include(g => g.Artist)
-                                    .Include(g => g.Genre)
-                                    .ToList();
-
-            var attendances = _dbContext.Attendees
-                              .Where(a => a.AttendeeId == attendeeId && a.Gig.GigDateTime >= DateTime.Now)
-                              .ToList().ToLookup(a => a.GigId);
-
             GigViewModel model = new GigViewModel
             {
-                UpcomingGigs = gigs,
+                UpcomingGigs = _unitOfWork.Gigs.GetGigsUserAttending(attendeeId),
                 ShowActions = User.Identity.IsAuthenticated,
                 Heading = "Gigs I'm attending",
-                Attendances = attendances
+                Attendances = _unitOfWork.Attendances.GetFutureUserAttendances(attendeeId).ToLookup(a => a.GigId)
 
             };
 
@@ -145,14 +137,7 @@ namespace Muzzo.Controllers
         [Authorize]
         public ActionResult MyUpcomingGigs()
         {
-            string artistId = User.Identity.GetUserId();
-
-            IEnumerable<Gig> upcomingGigs = _dbContext.Gigs
-                             .Where(g => g.ArtistId == artistId && g.GigDateTime >= DateTime.Now && g.IsCanceled != true)
-                             .Include(g => g.Genre)
-                             .ToList();
-
-            return View(upcomingGigs);
+            return View(_unitOfWork.Gigs.GetUpcomingGigsByArtist(User.Identity.GetUserId()));
         }
 
         //Search gigs by artist's name, venue or genre
@@ -165,19 +150,17 @@ namespace Muzzo.Controllers
         //Gets gig's details
         public ActionResult Details(int gigId)
         {
-            var gig = _dbContext.Gigs
-                      .Include(g => g.Artist.Followers)
-                      .Include(g => g.Attendees)
-                      .Include(g => g.Genre)
-                      .SingleOrDefault(g => g.Id == gigId);
+            var gig = _unitOfWork.Gigs.GetGigWithAttendeesAndArtistFollowers(gigId);
 
             if (gig == null)
                 return HttpNotFound();
 
-            GigDetailsViewModel model = GigDetailsViewModel.Create(gig, User.Identity.GetUserId(), User.Identity.IsAuthenticated);
-
-            return View(model);
+            return View(GigDetailsViewModel.Create(gig, User.Identity.GetUserId(), User.Identity.IsAuthenticated));
         }
+
+
+
+       
     }
 }
 

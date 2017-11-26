@@ -1,5 +1,5 @@
 ﻿@using Microsoft.AspNet.Identity
-@model Muzzo.ViewModels.GigViewModel
+@model Muzzo.Core.ViewModels.GigViewModel
 @{
     ViewBag.Title = "Gigs";
 }
@@ -17,7 +17,7 @@
     </div> 
 
 }
-<ul class="gigsList verticalOffset30">
+<ul id="gigs" class="gigsList verticalOffset30">
     @foreach (var gig in Model.UpcomingGigs)
     {
         <li>
@@ -37,32 +37,40 @@
                     {
                         <span class="label label-warning">Canceled</span>
                     }
-
-                    @if (Model.ShowActions)
-                    {
-                        <button data-followee-id="@gig.ArtistId" class="btn btn-link btn-sm pull-right jsFollow">Follow?</button>
-
-                    }
                 </span>
                 <span class="genre">
                     @gig.Genre.Name
                 </span>
+
                 @if (Model.ShowActions && !gig.IsCanceled)
                 {
+                    if (Model.Attendances.Contains(gig.Id))
+                    {
 
-                    <button data-gig-id="@gig.Id"
-                            class="btn @(Model.Attendances.Contains(gig.Id) ? "btn-info" : "btn-default")
-                                   btn-sm pull-right jsAttend">
-                        @(Model.Attendances.Contains(gig.Id) ? "Going" : "Going?")
-                    </button>
+                        <button id="btnAttending" data-gig-id="@gig.Id" class="btn btn-info btn-sm jsAttend">
+                            Going
+                        </button>
 
+                    }
+                    else
+                    {
+                        <button id="btnAttending" data-gig-id="@gig.Id" class="btn btn-default btn-sm jsAttend">
+                            Going?
+                        </button>
+
+                    }
                 }
-        </div>
+            </div>
+
+        </li>
+    }
+</ul>
 
 
-    </li>
-                }
-            </ul>
+
+
+
+
 
 
 
@@ -76,38 +84,7 @@
 
         $(document).ready(function () {
 
-            $(".jsAttend").click(function (e) {
-
-                var button = $(e.target);
-
-                if (button.hasClass("btn-default")) {
-                    $.post("/api/attendances", { gigId: button.attr("data-gig-id") })
-                        .done(function () { button.removeClass("btn-default").addClass("btn-info").text("Going"); })
-                        .fail(function () { bootbox.alert("Something went wrong."); });
-                }
-                else {
-
-                    $.ajax({
-                        url: "/api/attendances/" + button.attr("data-gig-id"),
-                        method: "DELETE"
-                    })
-                        .done(function () { button.removeClass("btn-info").addClass("btn-default").text("Going?"); })
-                        .fail(function () { bootbox.alert("Something went wrong."); });
-                }
-
-            });
-
-
-            $(".jsFollow").click(function (e) {
-
-                var button = $(e.target);
-
-                $.post("/api/followings", { followeeId: button.attr("data-followee-id") })
-                    .done(function () { button.text("Following"); })
-                    .fail(function () { alert("Something went wrong."); });
-
-            });
-
+            GigsController.init("#gigs");
 
         });
     </script>

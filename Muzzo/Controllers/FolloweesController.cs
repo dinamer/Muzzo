@@ -1,32 +1,24 @@
 ﻿using Microsoft.AspNet.Identity;
-using Muzzo.Models;
-using System.Collections.Generic;
-using System.Linq;
+using Muzzo.Core;
 using System.Web.Mvc;
 
 namespace Muzzo.Controllers
 {
     public class FolloweesController : Controller
     {
-        private ApplicationDbContext _dbContext;
+        private IUnitOfWork _unitOfWork;
 
-        public FolloweesController()
-        {
-            _dbContext = new ApplicationDbContext();
+        public FolloweesController(IUnitOfWork unitOfWork)
+        {       
+            _unitOfWork = unitOfWork;
         }
+
+
         // GET: Folowees
         [Authorize]
         public ActionResult Index()
-        {
-            var followerId = User.Identity.GetUserId();
-
-            IEnumerable<ApplicationUser> followees = _dbContext.Followings
-                                                    .Where(f => f.FollowerId == followerId)
-                                                    .Select(f => f.Followee)
-                                                    .ToList();
-                           
-
-            return View(followees);
+        {                           
+            return View(_unitOfWork.Followings.GetFolloweesByUser(User.Identity.GetUserId()));
         }
     }
 }

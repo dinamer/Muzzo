@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using Muzzo.Dtos;
-using Muzzo.Models;
+using Muzzo.Core.Dtos;
+using Muzzo.Core.Models;
 
 namespace Muzzo.App_Start
 {

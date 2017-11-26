@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNet.Identity;
-using Muzzo.Dtos;
-using Muzzo.Models;
-using System.Linq;
+using Muzzo.Core;
+using Muzzo.Core.Dtos;
+using Muzzo.Core.Models;
+using Muzzo.Persistence;
 using System.Web.Http;
 
 namespace Muzzo.Controllers.api
@@ -9,31 +10,38 @@ namespace Muzzo.Controllers.api
     [Authorize]
     public class AttendancesController : ApiController
     {
+        private IUnitOfWork _unitOfWork;
+
         private ApplicationDbContext _dbContext;
 
-
-        public AttendancesController()
+        public AttendancesController(IUnitOfWork unitOfWork)
         {
+            _unitOfWork = unitOfWork;
             _dbContext = new ApplicationDbContext();
         }
-
-
+        
         [HttpPost]
         public IHttpActionResult Attend(AttendanceDto attendanceDto)
         {
             string userId = User.Identity.GetUserId();
 
-            if (_dbContext.Attendees.Any(a => a.AttendeeId == userId && a.GigId == attendanceDto.GigId))
-                return BadRequest("The attendee is already added.");
-            Attendance attendance = new Attendance {
+            var attendance = _unitOfWork.Attendances.GetAttendance(attendanceDto.GigId, userId);
 
+            if (attendance != null)
+                return BadRequest("The attendee already added.");
+
+
+            attendance = new Attendance
+            {
                 GigId = attendanceDto.GigId,
                 AttendeeId = userId
 
             };
 
-            _dbContext.Attendees.Add(attendance);
-            _dbContext.SaveChanges();
+
+            _unitOfWork.Attendances.AddAttendance(attendance);
+
+            _unitOfWork.Complete();
 
 
             return Ok();
@@ -42,16 +50,14 @@ namespace Muzzo.Controllers.api
         [HttpDelete]
         public IHttpActionResult DeleteAttendance(int id)
         {
-            string attendeeId = User.Identity.GetUserId();
-
-            var attendance = _dbContext.Attendees
-                             .SingleOrDefault(a => a.GigId == id && a.AttendeeId == attendeeId);
-
+           
+            var attendance = _unitOfWork.Attendances.GetAttendance(id, User.Identity.GetUserId());
+                
             if (attendance == null)
                 return NotFound();
 
-            _dbContext.Attendees.Remove(attendance);
-            _dbContext.SaveChanges();
+            _unitOfWork.Attendances.RemoveAttendance(attendance);
+            _unitOfWork.Complete();
 
             return Ok(id);
         }

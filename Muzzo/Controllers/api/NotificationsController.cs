@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.AspNet.Identity;
-using Muzzo.Dtos;
-using Muzzo.Models;
+using Muzzo.Core;
+using Muzzo.Core.Dtos;
+using Muzzo.Core.Models;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Web.Http;
 
@@ -12,20 +12,16 @@ namespace Muzzo.Controllers.api
     [Authorize]
     public class NotificationsController : ApiController
     {
-        private ApplicationDbContext _dbContext;
-        public NotificationsController()
+        private IUnitOfWork _unitOfWork;
+
+        public NotificationsController(IUnitOfWork unitOfWork)
         {
-            _dbContext = new ApplicationDbContext();
+            _unitOfWork = unitOfWork;
         }
 
         public IEnumerable<NotificationDto> GetNewNotifications()
         {
-            var userId = User.Identity.GetUserId();
-            var notifications = _dbContext.UserNotifications
-                                .Where(un => un.UserId == userId && !un.IsRead)
-                                .Select(un => un.Notification)
-                                .Include(n => n.Gig.Artist)
-                                .ToList();
+            var notifications = _unitOfWork.Notifications.GetNewNotificationsForUser(User.Identity.GetUserId());
 
 
             return notifications.Select(Mapper.Map<Notification, NotificationDto>);
@@ -56,12 +52,12 @@ namespace Muzzo.Controllers.api
         [HttpPost]
         public IHttpActionResult MarkNotificationsAsRead()
         {
-            var user = User.Identity.GetUserId();
-            var notifications = _dbContext.UserNotifications.Where(un => un.UserId == user && !un.IsRead).ToList();
+            var notifications = _unitOfWork.UserNotifications
+                               .GetUserNotificationsForUser(User.Identity.GetUserId());
 
-            notifications.ForEach(un => un.NotificationRead());
+            notifications.ToList().ForEach(un => un.NotificationRead());
 
-            _dbContext.SaveChanges();
+            _unitOfWork.Complete();
          
            
             return Ok();

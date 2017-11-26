@@ -1,44 +1,36 @@
 ﻿using Microsoft.AspNet.Identity;
-using Muzzo.Models;
-using Muzzo.ViewModels;
-using System;
+using Muzzo.Core;
+using Muzzo.Core.Models;
+using Muzzo.Core.ViewModels;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
 
 namespace Muzzo.Controllers
 {
     public class HomeController : Controller
-    {
-        private ApplicationDbContext _dbContext;
+    {       
+        private IUnitOfWork _unitOfWork;
 
-        public HomeController()
+        public HomeController(IUnitOfWork unitOfWork)
         {
-            _dbContext = new ApplicationDbContext();
+            _unitOfWork = unitOfWork;
+
         }
 
         public ActionResult Index(string searchQuery = null)
         {
-            string userId = User.Identity.GetUserId();
-
-            IEnumerable<Gig> gigs = _dbContext.Gigs
-                                    .Include(g => g.Artist)
-                                    .Include(g => g.Genre)
-                                    .Where(g => g.GigDateTime > DateTime.Now && !g.IsCanceled)
-                                    .ToList();
+            IEnumerable<Gig> gigs = _unitOfWork.Gigs.GetAllUpcomingGigs();
 
             if (!string.IsNullOrWhiteSpace(searchQuery)) {
 
-                gigs = gigs.Where(g => g.Artist.Name.Contains(searchQuery) || 
-                                  g.Genre.Name.Contains(searchQuery) ||
-                                  g.Venue.Contains(searchQuery)); 
+                gigs = _unitOfWork.Gigs.SearchGigsByGenreVenueOrArtist(searchQuery);
             }
 
+            var attendances = _unitOfWork.Attendances
+                               .GetFutureUserAttendances(User.Identity.GetUserId())
+                               .ToLookup(a => a.GigId);
 
-            var attendances = _dbContext.Attendees
-                              .Where(a => a.AttendeeId == userId && a.Gig.GigDateTime >= DateTime.Now)
-                              .ToList().ToLookup(a => a.GigId);
 
             GigViewModel model = new GigViewModel {
 
@@ -54,14 +46,14 @@ namespace Muzzo.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "Description page.";
 
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "Contact page.";
 
             return View();
         }
