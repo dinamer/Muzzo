@@ -1,8 +1,8 @@
 ﻿using Muzzo.Core;
 using Muzzo.Core.Repositories;
-using Muzzo.Persistence.Repositories;
+using Muzzo.DAL.Repositories;
 
-namespace Muzzo.Persistence
+namespace Muzzo.DAL
 {
     public class UnitOfWork : IUnitOfWork
     {
@@ -33,7 +33,7 @@ namespace Muzzo.Persistence
         }
 
         public void Complete() {
-
+            
             _dbContext.SaveChanges();
         }
     }

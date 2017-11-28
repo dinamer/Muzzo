@@ -2,7 +2,7 @@
 using Muzzo.Core;
 using Muzzo.Core.Dtos;
 using Muzzo.Core.Models;
-using Muzzo.Persistence;
+using Muzzo.DAL;
 using System.Web.Http;
 
 namespace Muzzo.Controllers.api

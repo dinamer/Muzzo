@@ -3,7 +3,7 @@ using Muzzo.Core.Repositories;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Muzzo.Persistence.Repositories
+namespace Muzzo.DAL.Repositories
 {
 
     public class GenreRepository : IGenreRepository

@@ -2,15 +2,15 @@ namespace Muzzo.Migrations
 {
     using System.Data.Entity.Migrations;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<Muzzo.Persistence.ApplicationDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<Muzzo.DAL.ApplicationDbContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
-            MigrationsDirectory = @"Persistence\Migrations";
+            MigrationsDirectory = @"DAL\Migrations";
         }
 
-        protected override void Seed(Muzzo.Persistence.ApplicationDbContext context)
+        protected override void Seed(Muzzo.DAL.ApplicationDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 

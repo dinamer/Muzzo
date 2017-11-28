@@ -1,7 +1,7 @@
 ﻿using Muzzo.Core.Models;
 using System.Data.Entity.ModelConfiguration;
 
-namespace Muzzo.Persistence.EntityConfigurations
+namespace Muzzo.DAL.EntityConfigurations
 {
     public class GenreConfiguration : EntityTypeConfiguration<Genre>
     {

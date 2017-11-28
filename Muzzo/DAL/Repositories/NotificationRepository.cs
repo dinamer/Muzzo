@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 
-namespace Muzzo.Persistence.Repositories
+namespace Muzzo.DAL.Repositories
 {
     public class NotificationRepository : INotificationRepository
     {

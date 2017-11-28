@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNet.Identity;
 using Muzzo.Core;
-using Muzzo.Persistence;
+using Muzzo.DAL;
 using System.Web.Http;
 
 namespace Muzzo.Controllers.api

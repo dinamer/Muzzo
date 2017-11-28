@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
 using Muzzo.Core.Models;
-using Muzzo.Persistence.EntityConfigurations;
+using Muzzo.DAL.EntityConfigurations;
 using System.Data.Entity;
 
-namespace Muzzo.Persistence
+namespace Muzzo.DAL
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {

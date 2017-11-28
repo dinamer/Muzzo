@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Muzzo.Persistence.Repositories
+namespace Muzzo.DAL.Repositories
 {
     public class AttendanceRepository : IAttendanceRepository
     {
@@ -19,6 +19,7 @@ namespace Muzzo.Persistence.Repositories
         {
             _dbContext.Attendees.Add(attendance);
         }
+
 
         public void RemoveAttendance(Attendance attendance)
         {

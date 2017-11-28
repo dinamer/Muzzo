@@ -238,57 +238,57 @@
     <Compile Include="Core\Dtos\GigDto.cs" />
     <Compile Include="Core\Dtos\NotificationDto.cs" />
     <Compile Include="Core\Dtos\UserDto.cs" />
-    <Compile Include="Persistence\EntityConfigurations\AttendanceConfiguration.cs" />
-    <Compile Include="Persistence\EntityConfigurations\FollowingConfiguration.cs" />
-    <Compile Include="Persistence\EntityConfigurations\GenreConfiguration.cs" />
+    <Compile Include="DAL\EntityConfigurations\AttendanceConfiguration.cs" />
+    <Compile Include="DAL\EntityConfigurations\FollowingConfiguration.cs" />
+    <Compile Include="DAL\EntityConfigurations\GenreConfiguration.cs" />
     <Compile Include="Core\Repositories\INotificationRepository.cs" />
     <Compile Include="Core\Repositories\IUserNotificationRepository.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Persistence\EntityConfigurations\ApplicationUserConfiguration.cs" />
-    <Compile Include="Persistence\EntityConfigurations\GigConfiguration.cs" />
-    <Compile Include="Persistence\EntityConfigurations\NotificationConfiguration.cs" />
-    <Compile Include="Persistence\EntityConfigurations\UserNotificationConfiguration.cs" />
-    <Compile Include="Persistence\Migrations\201711121640247_DefaultInitialModel.cs" />
-    <Compile Include="Persistence\Migrations\201711121640247_DefaultInitialModel.Designer.cs">
+    <Compile Include="DAL\EntityConfigurations\ApplicationUserConfiguration.cs" />
+    <Compile Include="DAL\EntityConfigurations\GigConfiguration.cs" />
+    <Compile Include="DAL\EntityConfigurations\NotificationConfiguration.cs" />
+    <Compile Include="DAL\EntityConfigurations\UserNotificationConfiguration.cs" />
+    <Compile Include="DAL\Migrations\201711121640247_DefaultInitialModel.cs" />
+    <Compile Include="DAL\Migrations\201711121640247_DefaultInitialModel.Designer.cs">
       <DependentUpon>201711121640247_DefaultInitialModel.cs</DependentUpon>
     </Compile>
-    <Compile Include="Persistence\Migrations\201711121750587_AddGigsAndGenresTable.cs" />
-    <Compile Include="Persistence\Migrations\201711121750587_AddGigsAndGenresTable.Designer.cs">
+    <Compile Include="DAL\Migrations\201711121750587_AddGigsAndGenresTable.cs" />
+    <Compile Include="DAL\Migrations\201711121750587_AddGigsAndGenresTable.Designer.cs">
       <DependentUpon>201711121750587_AddGigsAndGenresTable.cs</DependentUpon>
     </Compile>
-    <Compile Include="Persistence\Migrations\201711121800495_PopulateGenresTable.cs" />
-    <Compile Include="Persistence\Migrations\201711121800495_PopulateGenresTable.Designer.cs">
+    <Compile Include="DAL\Migrations\201711121800495_PopulateGenresTable.cs" />
+    <Compile Include="DAL\Migrations\201711121800495_PopulateGenresTable.Designer.cs">
       <DependentUpon>201711121800495_PopulateGenresTable.cs</DependentUpon>
     </Compile>
-    <Compile Include="Persistence\Migrations\201711122208029_AddFKsToGigsTable.cs" />
-    <Compile Include="Persistence\Migrations\201711122208029_AddFKsToGigsTable.Designer.cs">
+    <Compile Include="DAL\Migrations\201711122208029_AddFKsToGigsTable.cs" />
+    <Compile Include="DAL\Migrations\201711122208029_AddFKsToGigsTable.Designer.cs">
       <DependentUpon>201711122208029_AddFKsToGigsTable.cs</DependentUpon>
     </Compile>
-    <Compile Include="Persistence\Migrations\201711140103516_AddNamePropertyToApplicationUser.cs" />
-    <Compile Include="Persistence\Migrations\201711140103516_AddNamePropertyToApplicationUser.Designer.cs">
+    <Compile Include="DAL\Migrations\201711140103516_AddNamePropertyToApplicationUser.cs" />
+    <Compile Include="DAL\Migrations\201711140103516_AddNamePropertyToApplicationUser.Designer.cs">
       <DependentUpon>201711140103516_AddNamePropertyToApplicationUser.cs</DependentUpon>
     </Compile>
-    <Compile Include="Persistence\Migrations\201711141853459_AddAttendancesTable.cs" />
-    <Compile Include="Persistence\Migrations\201711141853459_AddAttendancesTable.Designer.cs">
+    <Compile Include="DAL\Migrations\201711141853459_AddAttendancesTable.cs" />
+    <Compile Include="DAL\Migrations\201711141853459_AddAttendancesTable.Designer.cs">
       <DependentUpon>201711141853459_AddAttendancesTable.cs</DependentUpon>
     </Compile>
-    <Compile Include="Persistence\Migrations\201711150206283_AddFollowingsTable.cs" />
-    <Compile Include="Persistence\Migrations\201711150206283_AddFollowingsTable.Designer.cs">
+    <Compile Include="DAL\Migrations\201711150206283_AddFollowingsTable.cs" />
+    <Compile Include="DAL\Migrations\201711150206283_AddFollowingsTable.Designer.cs">
       <DependentUpon>201711150206283_AddFollowingsTable.cs</DependentUpon>
     </Compile>
-    <Compile Include="Persistence\Migrations\201711161907523_AddIsCanceledToGig.cs" />
-    <Compile Include="Persistence\Migrations\201711161907523_AddIsCanceledToGig.Designer.cs">
+    <Compile Include="DAL\Migrations\201711161907523_AddIsCanceledToGig.cs" />
+    <Compile Include="DAL\Migrations\201711161907523_AddIsCanceledToGig.Designer.cs">
       <DependentUpon>201711161907523_AddIsCanceledToGig.cs</DependentUpon>
     </Compile>
-    <Compile Include="Persistence\Migrations\201711182002312_AddNotificationsTable.cs" />
-    <Compile Include="Persistence\Migrations\201711182002312_AddNotificationsTable.Designer.cs">
+    <Compile Include="DAL\Migrations\201711182002312_AddNotificationsTable.cs" />
+    <Compile Include="DAL\Migrations\201711182002312_AddNotificationsTable.Designer.cs">
       <DependentUpon>201711182002312_AddNotificationsTable.cs</DependentUpon>
     </Compile>
-    <Compile Include="Persistence\Migrations\Configuration.cs" />
+    <Compile Include="DAL\Migrations\Configuration.cs" />
     <Compile Include="Core\ViewModels\AccountViewModels.cs" />
-    <Compile Include="Persistence\ApplicationDbContext.cs" />
+    <Compile Include="DAL\ApplicationDbContext.cs" />
     <Compile Include="Core\Models\ApplicationUser.cs" />
     <Compile Include="Core\Models\Attendance.cs" />
     <Compile Include="Core\Models\Following.cs" />
@@ -299,18 +299,18 @@
     <Compile Include="Core\Models\NotificationType.cs" />
     <Compile Include="Core\Models\UserNotification.cs" />
     <Compile Include="Core\IUnitOfWork.cs" />
-    <Compile Include="Persistence\Repositories\NotificationRepository.cs" />
-    <Compile Include="Persistence\Repositories\UserNotificationRepository.cs" />
-    <Compile Include="Persistence\UnitOfWork.cs" />
+    <Compile Include="DAL\Repositories\NotificationRepository.cs" />
+    <Compile Include="DAL\Repositories\UserNotificationRepository.cs" />
+    <Compile Include="DAL\UnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Core\Repositories\IGigRepository.cs" />
     <Compile Include="Core\Repositories\IGenreRepository.cs" />
     <Compile Include="Core\Repositories\IFollowingRepository.cs" />
     <Compile Include="Core\Repositories\IAttendanceRepository.cs" />
-    <Compile Include="Persistence\Repositories\AttendanceRepository.cs" />
-    <Compile Include="Persistence\Repositories\FollowingRepository.cs" />
-    <Compile Include="Persistence\Repositories\GenreRepository.cs" />
-    <Compile Include="Persistence\Repositories\GigRepository.cs" />
+    <Compile Include="DAL\Repositories\AttendanceRepository.cs" />
+    <Compile Include="DAL\Repositories\FollowingRepository.cs" />
+    <Compile Include="DAL\Repositories\GenreRepository.cs" />
+    <Compile Include="DAL\Repositories\GigRepository.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Core\ViewModels\GigDetailsViewModel.cs" />
     <Compile Include="Core\ViewModels\GigFormViewModel.cs" />
@@ -399,31 +399,31 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Persistence\Migrations\201711121640247_DefaultInitialModel.resx">
+    <EmbeddedResource Include="DAL\Migrations\201711121640247_DefaultInitialModel.resx">
       <DependentUpon>201711121640247_DefaultInitialModel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Persistence\Migrations\201711121750587_AddGigsAndGenresTable.resx">
+    <EmbeddedResource Include="DAL\Migrations\201711121750587_AddGigsAndGenresTable.resx">
       <DependentUpon>201711121750587_AddGigsAndGenresTable.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Persistence\Migrations\201711121800495_PopulateGenresTable.resx">
+    <EmbeddedResource Include="DAL\Migrations\201711121800495_PopulateGenresTable.resx">
       <DependentUpon>201711121800495_PopulateGenresTable.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Persistence\Migrations\201711122208029_AddFKsToGigsTable.resx">
+    <EmbeddedResource Include="DAL\Migrations\201711122208029_AddFKsToGigsTable.resx">
       <DependentUpon>201711122208029_AddFKsToGigsTable.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Persistence\Migrations\201711140103516_AddNamePropertyToApplicationUser.resx">
+    <EmbeddedResource Include="DAL\Migrations\201711140103516_AddNamePropertyToApplicationUser.resx">
       <DependentUpon>201711140103516_AddNamePropertyToApplicationUser.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Persistence\Migrations\201711141853459_AddAttendancesTable.resx">
+    <EmbeddedResource Include="DAL\Migrations\201711141853459_AddAttendancesTable.resx">
       <DependentUpon>201711141853459_AddAttendancesTable.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Persistence\Migrations\201711150206283_AddFollowingsTable.resx">
+    <EmbeddedResource Include="DAL\Migrations\201711150206283_AddFollowingsTable.resx">
       <DependentUpon>201711150206283_AddFollowingsTable.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Persistence\Migrations\201711161907523_AddIsCanceledToGig.resx">
+    <EmbeddedResource Include="DAL\Migrations\201711161907523_AddIsCanceledToGig.resx">
       <DependentUpon>201711161907523_AddIsCanceledToGig.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Persistence\Migrations\201711182002312_AddNotificationsTable.resx">
+    <EmbeddedResource Include="DAL\Migrations\201711182002312_AddNotificationsTable.resx">
       <DependentUpon>201711182002312_AddNotificationsTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
