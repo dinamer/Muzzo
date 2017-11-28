@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNet.Identity;
-using Muzzo.Core;
+using Muzzo.Main;
 using System.Web.Mvc;
 
 namespace Muzzo.Controllers

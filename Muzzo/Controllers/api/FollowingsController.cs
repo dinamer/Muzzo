@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNet.Identity;
-using Muzzo.Core;
-using Muzzo.Core.Dtos;
-using Muzzo.Core.Models;
+using Muzzo.Main;
+using Muzzo.Main.Dtos;
+using Muzzo.Main.Models;
 using System.Web.Http;
 
 namespace Muzzo.Controllers.api

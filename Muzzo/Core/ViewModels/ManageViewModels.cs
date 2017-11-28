@@ -3,7 +3,7 @@ using Microsoft.Owin.Security;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Muzzo.Core.ViewModels
+namespace Muzzo.Main.ViewModels
 {
     public class IndexViewModel
     {

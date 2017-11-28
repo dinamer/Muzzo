@@ -1,7 +1,7 @@
-﻿using Muzzo.Core.Models;
+﻿using Muzzo.Main.Models;
 using System;
 
-namespace Muzzo.Core.Dtos
+namespace Muzzo.Main.Dtos
 {
     public class NotificationDto
     {

@@ -1,7 +1,7 @@
-﻿using Muzzo.Core.Models;
+﻿using Muzzo.Main.Models;
 using System.Collections.Generic;
 
-namespace Muzzo.Core.Repositories
+namespace Muzzo.Main.Repositories
 {
     public interface IGigRepository
     {

@@ -3,7 +3,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
-using Muzzo.Core.Models;
+using Muzzo.Main.Models;
 using Muzzo.DAL;
 using System;
 using System.Security.Claims;

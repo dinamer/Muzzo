@@ -1,4 +1,4 @@
-﻿namespace Muzzo.Core.Models
+﻿namespace Muzzo.Main.Models
 {
     public enum NotificationType
     {

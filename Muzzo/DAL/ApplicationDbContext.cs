@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
-using Muzzo.Core.Models;
+using Muzzo.Main.Models;
 using Muzzo.DAL.EntityConfigurations;
 using System.Data.Entity;
 

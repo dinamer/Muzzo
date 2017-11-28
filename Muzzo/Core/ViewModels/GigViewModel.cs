@@ -1,8 +1,8 @@
-﻿using Muzzo.Core.Models;
+﻿using Muzzo.Main.Models;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Muzzo.Core.ViewModels
+namespace Muzzo.Main.ViewModels
 {
     public class GigViewModel
     {

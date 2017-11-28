@@ -1,6 +1,6 @@
-﻿using Muzzo.Core.Repositories;
+﻿using Muzzo.Main.Repositories;
 
-namespace Muzzo.Core
+namespace Muzzo.Main
 {
     public interface IUnitOfWork
     {

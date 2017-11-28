@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 
-namespace Muzzo.Core.ViewModels
+namespace Muzzo.Main.ViewModels
 {
     public class ValidTimeAttribute : ValidationAttribute
     {

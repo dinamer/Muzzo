@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
-namespace Muzzo.Core.Models
+namespace Muzzo.Main.Models
 {
     public class Gig
     {

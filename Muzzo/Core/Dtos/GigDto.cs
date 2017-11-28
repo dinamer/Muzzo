@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Muzzo.Core.Dtos
+namespace Muzzo.Main.Dtos
 {
     public class GigDto
     {

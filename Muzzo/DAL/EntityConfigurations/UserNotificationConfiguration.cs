@@ -1,4 +1,4 @@
-﻿using Muzzo.Core.Models;
+﻿using Muzzo.Main.Models;
 using System.Data.Entity.ModelConfiguration;
 
 namespace Muzzo.DAL.EntityConfigurations

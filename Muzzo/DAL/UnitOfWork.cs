@@ -1,5 +1,5 @@
-﻿using Muzzo.Core;
-using Muzzo.Core.Repositories;
+﻿using Muzzo.Main;
+using Muzzo.Main.Repositories;
 using Muzzo.DAL.Repositories;
 
 namespace Muzzo.DAL

@@ -1,4 +1,4 @@
-﻿namespace Muzzo.Core.Dtos
+﻿namespace Muzzo.Main.Dtos
 {
     public class AttendanceDto
     {

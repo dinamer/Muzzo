@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNet.Identity;
-using Muzzo.Core;
-using Muzzo.Core.Models;
-using Muzzo.Core.ViewModels;
+using Muzzo.Main;
+using Muzzo.Main.Models;
+using Muzzo.Main.ViewModels;
 using System.Linq;
 using System.Web.Mvc;
 

@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using Muzzo.Core.Models;
-using Muzzo.Core.ViewModels;
+using Muzzo.Main.Models;
+using Muzzo.Main.ViewModels;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;

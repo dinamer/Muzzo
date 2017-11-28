@@ -1,5 +1,5 @@
-﻿using Muzzo.Core.Models;
-using Muzzo.Core.Repositories;
+﻿using Muzzo.Main.Models;
+using Muzzo.Main.Repositories;
 using System.Collections.Generic;
 using System.Linq;
 

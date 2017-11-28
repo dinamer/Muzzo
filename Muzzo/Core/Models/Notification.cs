@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Muzzo.Core.Models
+namespace Muzzo.Main.Models
 {
     public class Notification
     {

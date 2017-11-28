@@ -1,12 +1,12 @@
 ﻿using Muzzo.Controllers;
-using Muzzo.Core.Models;
+using Muzzo.Main.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq.Expressions;
 using System.Web.Mvc;
 
-namespace Muzzo.Core.ViewModels
+namespace Muzzo.Main.ViewModels
 {
     public class GigFormViewModel
     {

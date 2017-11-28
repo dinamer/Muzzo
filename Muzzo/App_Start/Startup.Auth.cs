@@ -2,7 +2,7 @@
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
-using Muzzo.Core.Models;
+using Muzzo.Main.Models;
 using Muzzo.DAL;
 using Owin;
 using System;
