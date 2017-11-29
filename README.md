@@ -1,7 +1,9 @@
 # Muzzo
 
 Description:
-Mini social network app for artists. Implemented features:
+Mini social network app for artists. 
+
+Implemented features:
 Add, edit, delete a gig
 View list of upcoming gigs
 View gig details
