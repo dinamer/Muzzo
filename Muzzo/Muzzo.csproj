@@ -232,17 +232,17 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\api\NotificationsController.cs" />
-    <Compile Include="Core\Dtos\AttendanceDto.cs" />
-    <Compile Include="Core\Dtos\FollowingDto.cs" />
-    <Compile Include="Core\Dtos\GenreDto.cs" />
-    <Compile Include="Core\Dtos\GigDto.cs" />
-    <Compile Include="Core\Dtos\NotificationDto.cs" />
-    <Compile Include="Core\Dtos\UserDto.cs" />
+    <Compile Include="Main\Dtos\AttendanceDto.cs" />
+    <Compile Include="Main\Dtos\FollowingDto.cs" />
+    <Compile Include="Main\Dtos\GenreDto.cs" />
+    <Compile Include="Main\Dtos\GigDto.cs" />
+    <Compile Include="Main\Dtos\NotificationDto.cs" />
+    <Compile Include="Main\Dtos\UserDto.cs" />
     <Compile Include="DAL\EntityConfigurations\AttendanceConfiguration.cs" />
     <Compile Include="DAL\EntityConfigurations\FollowingConfiguration.cs" />
     <Compile Include="DAL\EntityConfigurations\GenreConfiguration.cs" />
-    <Compile Include="Core\Repositories\INotificationRepository.cs" />
-    <Compile Include="Core\Repositories\IUserNotificationRepository.cs" />
+    <Compile Include="Main\Repositories\INotificationRepository.cs" />
+    <Compile Include="Main\Repositories\IUserNotificationRepository.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -287,36 +287,36 @@
       <DependentUpon>201711182002312_AddNotificationsTable.cs</DependentUpon>
     </Compile>
     <Compile Include="DAL\Migrations\Configuration.cs" />
-    <Compile Include="Core\ViewModels\AccountViewModels.cs" />
+    <Compile Include="Main\ViewModels\AccountViewModels.cs" />
     <Compile Include="DAL\ApplicationDbContext.cs" />
-    <Compile Include="Core\Models\ApplicationUser.cs" />
-    <Compile Include="Core\Models\Attendance.cs" />
-    <Compile Include="Core\Models\Following.cs" />
-    <Compile Include="Core\Models\Genre.cs" />
-    <Compile Include="Core\Models\Gig.cs" />
-    <Compile Include="Core\ViewModels\ManageViewModels.cs" />
-    <Compile Include="Core\Models\Notification.cs" />
-    <Compile Include="Core\Models\NotificationType.cs" />
-    <Compile Include="Core\Models\UserNotification.cs" />
-    <Compile Include="Core\IUnitOfWork.cs" />
+    <Compile Include="Main\Models\ApplicationUser.cs" />
+    <Compile Include="Main\Models\Attendance.cs" />
+    <Compile Include="Main\Models\Following.cs" />
+    <Compile Include="Main\Models\Genre.cs" />
+    <Compile Include="Main\Models\Gig.cs" />
+    <Compile Include="Main\ViewModels\ManageViewModels.cs" />
+    <Compile Include="Main\Models\Notification.cs" />
+    <Compile Include="Main\Models\NotificationType.cs" />
+    <Compile Include="Main\Models\UserNotification.cs" />
+    <Compile Include="Main\IUnitOfWork.cs" />
     <Compile Include="DAL\Repositories\NotificationRepository.cs" />
     <Compile Include="DAL\Repositories\UserNotificationRepository.cs" />
     <Compile Include="DAL\UnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Core\Repositories\IGigRepository.cs" />
-    <Compile Include="Core\Repositories\IGenreRepository.cs" />
-    <Compile Include="Core\Repositories\IFollowingRepository.cs" />
-    <Compile Include="Core\Repositories\IAttendanceRepository.cs" />
+    <Compile Include="Main\Repositories\IGigRepository.cs" />
+    <Compile Include="Main\Repositories\IGenreRepository.cs" />
+    <Compile Include="Main\Repositories\IFollowingRepository.cs" />
+    <Compile Include="Main\Repositories\IAttendanceRepository.cs" />
     <Compile Include="DAL\Repositories\AttendanceRepository.cs" />
     <Compile Include="DAL\Repositories\FollowingRepository.cs" />
     <Compile Include="DAL\Repositories\GenreRepository.cs" />
     <Compile Include="DAL\Repositories\GigRepository.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="Core\ViewModels\GigDetailsViewModel.cs" />
-    <Compile Include="Core\ViewModels\GigFormViewModel.cs" />
-    <Compile Include="Core\ViewModels\GigViewModel.cs" />
-    <Compile Include="Core\ViewModels\ValidDateAttribute.cs" />
-    <Compile Include="Core\ViewModels\ValidTimeAttribute.cs" />
+    <Compile Include="Main\ViewModels\GigDetailsViewModel.cs" />
+    <Compile Include="Main\ViewModels\GigFormViewModel.cs" />
+    <Compile Include="Main\ViewModels\GigViewModel.cs" />
+    <Compile Include="Main\ViewModels\ValidDateAttribute.cs" />
+    <Compile Include="Main\ViewModels\ValidTimeAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
